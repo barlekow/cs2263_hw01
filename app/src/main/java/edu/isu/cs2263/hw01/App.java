@@ -4,9 +4,17 @@
 package edu.isu.cs2263.hw01;
 
 public class App {
-    public String  {
-        return "Hello World!";
-    }
+    public static void main(String[]args) {
 
-    public static void main()
+        char help = h;
+        char batch = b;
+        char output = o;
+
+        if (user enters h){
+            System.out.println("usage: eval [OPTIONS]\nEvaluation of simple mathematical expressions");
+        }  else if (user enters b){
+            System.out.println("Batch value: lib");
+        }  else
+            System.out.println("Output value: lib");
+    }
 }
