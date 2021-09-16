@@ -1,0 +1,141 @@
+import java.io.*;
+import java.util.*;
+
+class reading2 {
+    public static void main(String args[]) {
+        Scanner sc=new Scanner(System.in);
+        String read=sc.next();
+        String number="";
+        int flag=1,numberCount=0,symbolCount=0,start;
+        float numbers[]=new float[100];
+        char symbol[]=new char[100];
+        String expression[] = new String[200];
+        Queue<String> exprQueue = new LinkedList<>();
+        Stack<String> operatorStack = new Stack<String>();
+        Stack<Float> byResults = new Stack<Float>();
+        for(int i=0;i<read.length();i++) {
+            if((read.charAt(0)=='+')||(read.charAt(0)=='-'))
+                ;
+            if(flag==1) {
+
+                start=i;
+                number="";
+                flag=0;
+            }
+            char ch=read.charAt(i);
+            if(Character.isDigit(ch)) {
+                number=number+ch;
+                continue;
+            }
+            else if((ch=='+')||(ch=='-')||(ch=='*')||(ch=='/')) {
+                expression[numberCount+symbolCount]=number;
+                expression[numberCount+symbolCount+1]=Character.toString(ch);
+                numberCount++;
+                symbolCount++;
+                flag=1;
+            }
+
+        }
+        numbers[numberCount]=Integer.parseInt(number);
+        expression[symbolCount+numberCount]=number;
+        numberCount++;
+        int size=numberCount+symbolCount;
+		/*System.out.println("the list of numbers are ");
+		for(int i=0;i<numberCount;i++) {
+			System.out.println(numbers[i]);
+		}
+		System.out.println("the list of symbols  are ");
+		for(int i=0;i<symbolCount;i++) {
+			System.out.println(symbol[i]);
+		} */
+
+        for(int i=0;i<size;i++) {
+            String a=expression[i];
+            if(Character.isDigit(a.charAt(0))) {
+                exprQueue.add(a);
+            }
+            else {
+                if(operatorStack.size()==0) {
+                    operatorStack.push(a);
+                }
+                else {
+                    String top=operatorStack.peek();
+                    if(top.equals(a)) {
+                        operatorStack.push(top);
+                    }
+                    else if(a.equals("/")) {
+                        operatorStack.push(a);
+                    }
+                    else if(a.equals("*")) {
+                        String top1=operatorStack.peek();
+                        if(top1.equals("/")) {
+                            top=operatorStack.pop();
+                            exprQueue.add(top);
+                            i=i-1;
+                        }
+                        else  {
+                            operatorStack.push(a);
+                        }
+                    }
+                    else {
+                        top=operatorStack.pop();
+                        exprQueue.add(top);
+                        i=i-1;
+                    }
+                }
+            }
+        }
+        int osize=operatorStack.size();
+        String top;
+        for(int i=0;i<osize;i++) {
+            top=operatorStack.pop();
+            exprQueue.add(top);
+        }
+        System.out.println(exprQueue);
+        while(exprQueue.size()!=0){
+            String a=exprQueue.remove();
+            if(Character.isDigit(a.charAt(0))) {
+                float operand=Float.parseFloat(a);
+                byResults.push(operand);
+                System.out.println("pushed "+operand);
+
+            }
+            else {
+                float operand1=0,operand2=0;
+                if(a.equals("+")) {
+                    operand2=byResults.pop();
+                    operand1=byResults.pop();
+                    float ans=operand1+operand2;
+                    System.out.println("added "+operand1+" "+operand2);
+                    byResults.push(ans);
+                }
+
+                else if(a.equals("-")) {
+                    operand2=byResults.pop();
+                    operand1=byResults.pop();
+                    float ans=operand1-operand2;
+                    System.out.println("subtracted "+operand1+" "+operand2);
+                    byResults.push(ans);
+                }
+                else if(a.equals("*")) {
+                    operand2=byResults.pop();
+                    operand1=byResults.pop();
+                    float ans=operand1*operand2;
+                    System.out.println("multipiled  "+operand1+" "+operand2);
+                    byResults.push(ans);
+                }
+                else if(a.equals("/")) {
+                    operand2=byResults.pop();
+                    operand1=byResults.pop();
+                    float ans=operand1/operand2;
+                    System.out.println("divided  "+operand1+" "+operand2);
+                    byResults.push(ans);
+                }
+            }
+        }
+        float ans=byResults.peek();
+        System.out.println("the answer is "+ans);
+
+
+    }
+}
