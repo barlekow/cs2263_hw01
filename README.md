@@ -1,3 +1,5 @@
 # cs2263_hw01
-Class Mini Project
-Simple Math Expression
+ Simple Mathematical Expression
+
+ This is v1.0.0 release with Apache Commons CLI
+
