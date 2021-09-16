@@ -7,3 +7,6 @@ and this project ahderes to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [1.0.0] - 2021-09-15
+### Added
+
+- Appache Commons CLI
