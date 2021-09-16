@@ -1,0 +1,65 @@
+import java.io.*;
+import java.util.*;
+
+class reading {
+    public static void main(String args[]) {
+        Scanner sc=new Scanner(System.in);
+        String read=sc.next();
+        String number="";
+        int flag=1,numberCount=0,symbolCount=0,start;
+        float numbers[]=new float[100];
+        char symbol[]=new char[100];
+        for(int i=0;i<read.length();i++) {
+            if((read.charAt(0)=='+')||(read.charAt(0)=='-'))
+                ;
+            if(flag==1) {
+
+                start=i;
+                number="";
+                flag=0;
+            }
+            char ch=read.charAt(i);
+            if(Character.isDigit(ch)) {
+                number=number+ch;
+                continue;
+            }
+            else if((ch=='+')||(ch=='-')||(ch=='*')||(ch=='/')) {
+                numbers[numberCount]=Float.parseFloat(number);
+                symbol[symbolCount]=ch;
+                numberCount++;
+                symbolCount++;
+                flag=1;
+            }
+
+        }
+        numbers[numberCount]=Integer.parseInt(number);
+        numberCount++;
+		/*System.out.println("the list of numbers are ");
+		for(int i=0;i<numberCount;i++) {
+			System.out.println(numbers[i]);
+		}
+		System.out.println("the list of symbols  are ");
+		for(int i=0;i<symbolCount;i++) {
+			System.out.println(symbol[i]);
+		} */
+        float result=numbers[0];
+        for(int i=0;i<symbolCount;i++) {
+            if(symbol[i]=='+') {
+                result=result+numbers[i+1];
+            }
+            else if(symbol[i]=='*') {
+                result=result*numbers[i+1];
+            }
+            else if(symbol[i]=='-') {
+                result=result-numbers[i+1];
+            }
+            else if(symbol[i]=='/') {
+                result=result/numbers[i+1];
+            }
+
+        }
+        System.out.println("result is "+result);
+
+    }
+
+}
